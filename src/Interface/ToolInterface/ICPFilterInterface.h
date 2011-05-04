@@ -26,51 +26,37 @@
  DEALINGS IN THE SOFTWARE.
  */
 
-#include <Core/Utils/Log.h>
+#ifndef INTERFACE_TOOLINTERFACE_ICPFilterINTERFACE_H
+#define INTERFACE_TOOLINTERFACE_ICPFilterINTERFACE_H
 
-#include <Application/PythonModule/PythonActionContext.h>
+// Base class of the tool widget
+#include <Interface/Application/ToolWidget.h>
 
 namespace Seg3D
 {
 
-PythonActionContext::PythonActionContext()
-{
-}
+class ICPFilterInterfacePrivate;
 
-PythonActionContext::~PythonActionContext()
+class ICPFilterInterface : public ToolWidget
 {
-}
+Q_OBJECT
 
-void PythonActionContext::report_error( const std::string& error )
-{
-	this->action_message_signal_( Core::LogMessageType::ERROR_E, error );
-}
+// -- Constructor/destructor --
+public:
+	ICPFilterInterface();
+	virtual ~ICPFilterInterface();
 
-void PythonActionContext::report_warning( const std::string& warning )
-{
-	this->action_message_signal_( Core::LogMessageType::WARNING_E, warning );
-}
+// -- create interface --
+public:
+	// BUILD_WIDGET:
+	// This function builds the actual GUI
+	virtual bool build_widget( QFrame* frame );
 
-void PythonActionContext::report_message( const std::string& message )
-{
-	this->action_message_signal_( Core::LogMessageType::MESSAGE_E, message );
-}
+private:
+	boost::shared_ptr< ICPFilterInterfacePrivate > private_;
 
-void PythonActionContext::report_need_resource( const Core::NotifierHandle& notifier )
-{
-	std::string message = std::string( "'" ) + notifier->get_name() + std::string(
-	    "' is currently unavailable" );
-	this->action_message_signal_( Core::LogMessageType::ERROR_E, message );
-}
+};
 
-void PythonActionContext::report_done()
-{
-	this->action_done_signal_( this->status() );
-}
+} // namespace Seg3D
 
-Core::ActionSource PythonActionContext::source() const
-{
-	return Core::ActionSource::COMMANDLINE_E;
-}
-
-} //end namespace Seg3D
+#endif
