@@ -131,39 +131,39 @@ ENDIF()
 # Configure Qt
 ###########################################
 
-IF(WIN32)
-  OPTION(DO_ZLIB_MANGLE "Mangle Zlib names" OFF)
-ELSE()
-  OPTION(DO_ZLIB_MANGLE "Mangle Zlib names to avoid conflicts with Qt5 or other external libraries" ON)
-ENDIF()
-
-IF(SEG3D_BUILD_INTERFACE)
-  SET(Qt5_PATH "" CACHE PATH "Path to directory where Qt 5 is installed. Directory should contain lib and bin subdirectories.")
-  #SET(CMAKE_AUTOMOC ON)
-
-  IF(IS_DIRECTORY ${Qt5_PATH})
-    FIND_PACKAGE(Qt5Core REQUIRED HINTS ${Qt5_PATH})
-    FIND_PACKAGE(Qt5Gui REQUIRED HINTS ${Qt5_PATH})
-    FIND_PACKAGE(Qt5OpenGL REQUIRED HINTS ${Qt5_PATH})
-  ELSE()
-    MESSAGE(SEND_ERROR "Set Qt5_PATH to directory where Qt 5 is installed (containing lib and bin subdirectories) or set SEG3D_BUILD_INTERFACE to OFF.")
-  ENDIF()
-
-  IF(Qt5Core_FOUND)
-    MESSAGE(STATUS "Found Qt version: ${Qt5Core_VERSION}")
-    IF(${Qt5Core_VERSION} VERSION_LESS "5.9")
-      MESSAGE(FATAL_ERROR "Qt 5.9 or greater is required for building the Seg3D GUI")
-    ENDIF()
-  ELSE()
-    MESSAGE(FATAL_ERROR "Qt5 is required for building the Seg3D GUI")
-  ENDIF()
-
-  IF(APPLE)
-    SET(MACDEPLOYQT_OUTPUT_LEVEL 0 CACHE STRING "Set macdeployqt output level (0-3)")
-    MARK_AS_ADVANCED(MACDEPLOYQT_OUTPUT_LEVEL)
-  ENDIF()
-
-ENDIF()
+#IF(WIN32)
+#  OPTION(DO_ZLIB_MANGLE "Mangle Zlib names" OFF)
+#ELSE()
+#  OPTION(DO_ZLIB_MANGLE "Mangle Zlib names to avoid conflicts with Qt5 or other external libraries" ON)
+#ENDIF()
+#
+#IF(SEG3D_BUILD_INTERFACE)
+#  SET(Qt5_PATH "" CACHE PATH "Path to directory where Qt 5 is installed. Directory should contain lib and bin subdirectories.")
+#  #SET(CMAKE_AUTOMOC ON)
+#
+#  IF(IS_DIRECTORY ${Qt5_PATH})
+#    FIND_PACKAGE(Qt5Core REQUIRED HINTS ${Qt5_PATH})
+#    FIND_PACKAGE(Qt5Gui REQUIRED HINTS ${Qt5_PATH})
+#    FIND_PACKAGE(Qt5OpenGL REQUIRED HINTS ${Qt5_PATH})
+#  ELSE()
+#    MESSAGE(SEND_ERROR "Set Qt5_PATH to directory where Qt 5 is installed (containing lib and bin subdirectories) or set SEG3D_BUILD_INTERFACE to OFF.")
+#  ENDIF()
+#
+#  IF(Qt5Core_FOUND)
+#    MESSAGE(STATUS "Found Qt version: ${Qt5Core_VERSION}")
+#    IF(${Qt5Core_VERSION} VERSION_LESS "5.9")
+#      MESSAGE(FATAL_ERROR "Qt 5.9 or greater is required for building the Seg3D GUI")
+#    ENDIF()
+#  ELSE()
+#    MESSAGE(FATAL_ERROR "Qt5 is required for building the Seg3D GUI")
+#  ENDIF()
+#
+#  IF(APPLE)
+#    SET(MACDEPLOYQT_OUTPUT_LEVEL 0 CACHE STRING "Set macdeployqt output level (0-3)")
+#    MARK_AS_ADVANCED(MACDEPLOYQT_OUTPUT_LEVEL)
+#  ENDIF()
+#
+#ENDIF()
 
 
 ###########################################
